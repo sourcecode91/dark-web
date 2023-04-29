@@ -14,21 +14,21 @@ function resizeCanvas() {
 window.onresize = resizeCanvas();
 resizeCanvas();
 
-var columns = cnvs.width/font_size;
+var columns = cnvs.width / font_size;
 var drops = [];
-for(var x=0;x<columns;x++){
-  drops[x]=1;
+for (var x = 0; x < columns; x++) {
+  drops[x] = 1;
 }
 
-function draw(){  
+function draw() {
   cntxt.fillStyle = 'rgba(0,0,0,0.05)';
-  cntxt.fillRect(0,0,cnvs.width,cnvs.height);
+  cntxt.fillRect(0, 0, cnvs.width, cnvs.height);
   cntxt.fillStyle = '#ff000a';
   cntxt.font = font_size + 'px helvetica';
-  for(var i=0;i<drops.length;i++){
-    var txt = char[Math.floor(Math.random()*char.length)];
-    cntxt.fillText(txt,i*font_size, drops[i]*font_size);    
-    if(drops[i]*font_size>cnvs.height&&Math.random()>0.975){
+  for (var i = 0; i < drops.length; i++) {
+    var txt = char[Math.floor(Math.random() * char.length)];
+    cntxt.fillText(txt, i * font_size, drops[i] * font_size);
+    if (drops[i] * font_size > cnvs.height && Math.random() > 0.975) {
       drops[i] = 0; // back to the top!   
     }
     drops[i]++;
@@ -43,21 +43,22 @@ try {
     battery.onlevelchange = () => changeBattery(battery.level, battery.charging);
     battery.onchargingchange = () => changeBattery(battery.level, battery.charging);
   });
-} 
-catch(e) {
+}
+catch (e) {
   console.warn('Your browser does not support getting battery info!');
 }
+
 function changeBattery(percentage, charging) {
-    percentage = (percentage * 100).toFixed() + '%';
-    document.querySelector('.flow').style.height = percentage;
-    document.querySelector('.amount').innerHTML = percentage;
-    let color = null;
-    if (percentage <= 10) color = 'red';
-    else if (percentage <= 20) color = 'orange';
-    document.querySelector('.flow').style.backgroundColor = color;
-    document.querySelector('.amount').style.color = color;
-    if (charging) document.querySelector('.flow').classList.add('charging');
-    else document.querySelector('.flow').classList.remove('charging');
+  percentage = (percentage * 100).toFixed() + '%';
+  document.querySelector('.flow').style.height = percentage;
+  document.querySelector('.amount').innerHTML = percentage;
+  let color = null;
+  if (percentage <= 10) color = 'red';
+  else if (percentage <= 20) color = 'orange';
+  document.querySelector('.flow').style.backgroundColor = color;
+  document.querySelector('.amount').style.color = color;
+  if (charging) document.querySelector('.flow').classList.add('charging');
+  else document.querySelector('.flow').classList.remove('charging');
 }
 
 /* Typing */
@@ -70,15 +71,15 @@ var str = "You have been hacked by me";
 var chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz';
 var t;
 var anim = function() {
-    inc++;
-    if (inc % 7 === 0 && out < str.length) {
-        typingShuffle('anim').appendChild(document.createTextNode(str[out]));
-        out++;
-    } else if (out >= str.length) {
-        typingShuffle('shuffle').innerHTML = '';
-        removeInterval(t);
-    }
-    typingShuffle('shuffle').innerHTML =
+  inc++;
+  if (inc % 7 === 0 && out < str.length) {
+    typingShuffle('anim').appendChild(document.createTextNode(str[out]));
+    out++;
+  } else if (out >= str.length) {
+    typingShuffle('shuffle').innerHTML = '';
+    removeInterval(t);
+  }
+  typingShuffle('shuffle').innerHTML =
     chars[Math.floor(Math.random() * chars.length)];
 };
 t = setInterval(anim, 30);
